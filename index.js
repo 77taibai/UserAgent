@@ -1,67 +1,52 @@
 /*
-支持识别的浏览器：
-Firefox  新版Edge  IE  Opera  企业微信  微信  QQ  TIM  迅雷  支付宝
-
 V1.0    新版发布
-V1.1    更新了 企业微信  微信  QQ  TIM  迅雷  支付宝
-V1.2    修复了name()的Bug
-        更改了网页文案
+V1.1    [数据更新]更新了浏览器数据
+V1.2    [问题修复]修复了name()的Bug
+        [系统优化]更改了网页文案
+V1.3    [问题修复]修复了内核检测的Bug
+V1.4    [系统优化]更新了判断方式
+V1.5    [数据更新]更新了浏览器数据
+V1.6    [系统优化]更改了判断顺序，改为：先判断内核，再判断名称（解决手机Edge再for循环后不向下进行的Bug）
 */
+
+
 
 var ua = navigator.userAgent;
 window.onload = function () {
+
     // 软件版本
-    document.getElementById('v').innerText = '1.2';
+    document.getElementById('v').innerText = '1.5';
     document.getElementById('browserUA').innerText = ua;
     var browserName = document.getElementById('browserName');
     var browserCore = document.getElementById('browserCore');
 
-    // 新版Edge浏览器
-    if (index('Edg/')) {
-        browserName.innerText = 'Edge浏览器' + ' ' + ua.match('(?<=Edg/).*');
-        if (index('Chrome/')) {
-            browserCore.innerText = 'Chromium' + ' ' + ua.match('(?<=Chrome/).*').toString().split(' ')[0];
-        }
+
+    // 尝试检测内核
+    if (index('Chrome/')) {
+        browserCore.innerText = 'Chromium' + ' ' + name('Chrome');
+    } else if (index('WebKit/')) {
+        browserCore.innerText = 'WebKit' + ' ' + name('WebKit');
+    } else if (index('Presto/')) {
+        browserCore.innerText = 'Presto' + ' ' + name('Presto');
+    } else if (index('Gecko/')) {
+        browserCore.innerText = 'Gecko' + ' ' + name('Gecko');
+    } else if (index('Trident/')) {
+        browserCore.innerText = 'Trident(IE)' + ' ' + ua.split('Trident/')[1].split(';')[0];
     }
 
-    // 新版Edge浏览器 Android
-    if (index('EdgA/')) {
-        browserName.innerText = 'Edge浏览器' + ' ' + ua.match('(?<=EdgA/).*');
-        if (index('Chrome/')) {
-            browserCore.innerText = 'Chromium' + ' ' + ua.match('(?<=Chrome/).*').toString().split(' ')[0];
+
+    // 常识判断浏览器名称
+    for (var dataKey in data) {
+        if (ua.indexOf(data[dataKey][0]) !== -1) {
+            browserName.innerText = data[dataKey][1] + ' ' + ua.split(data[dataKey][0] + '/')[1].split(' ')[0];
         }
     }
 
     // IE浏览器
-    if (index('Trident/')) {
-        browserCore.innerText = 'Trident(IE)' + ' ' + ua.split('Trident/')[1].split(';')[0];
-        if (index('MSIE')) {
-            browserName.innerText = 'InternetExplorer' + ' ' + ua.split('MSIE ')[1].split(';')[0];
-        } else if (index('rv:')) {
-            browserName.innerText = 'InternetExplorer 11.0';
-        }
-    }
-
-    // Firefox
-    if (index('Gecko/') && index('Firefox')) {
-        browserCore.innerText = 'Gecko' + ' ' + name('Gecko');
-        browserName.innerText = 'Firefox' + ' ' + name('Firefox');
-    }
-
-    // Opera
-    if (index('Opera/')) {
-        browserName.innerText = 'Opera' + ' ' + name('Opera');
-        browserCore.innerText = 'Presto' + ' ' + name('Presto');
-    }
-
-    // 企业微信
-    if (index('wxwork/')) {
-        browserName.innerText = '企业微信' + ' ' + name('wxwork');
-    }
-
-    // 微信
-    if (index('WeChat/')) {
-        browserName.innerText = '微信' + ' ' + name('MicroMessenger');
+    if (index('MSIE')) {
+        browserName.innerText = 'InternetExplorer' + ' ' + ua.split('MSIE ')[1].split(';')[0];
+    } else if (index('rv:')) {
+        browserName.innerText = 'InternetExplorer 11.0';
     }
 
     // TIM
@@ -72,23 +57,6 @@ window.onload = function () {
     // QQ
     if (index('QQ/') && index('TIM/') === false) {
         browserName.innerText = 'TIM' + ' ' + name('QQ');
-    }
-
-    // 支付宝
-    if (index('AlipayClient/')) {
-        browserName.innerText = '支付宝' + ' ' + name('AlipayClient');
-    }
-
-    // 迅雷
-    if (index('Thunder/')) {
-        browserName.innerText = '迅雷' + ' ' + name('Thunder');
-    }
-
-    // 尝试检测内核
-    if (index('Chrome/')) {
-        browserCore.innerText = 'Chromium' + ' ' + ua.match('(?<=Chrome/).*').toString().split(' ')[0];
-    } else if (index('WebKit/')) {
-        browserCore.innerText = 'WebKit' + ' ' + ua.split('WebKit/')[1].split(' ')[0];
     }
 
 };

@@ -1,1 +1,28 @@
-<!DOCTYPE html><html lang=zh><head><meta charset=UTF-8><title>UA检测</title><script>var ua=navigator.userAgent;function name(e){return ua.split(e+"/")[1].split(" ")[0]}function index(e){return-1!==ua.indexOf(e)}window.onload=function(){document.getElementById("v").innerText="1.2",document.getElementById("browserUA").innerText=ua;var e=document.getElementById("browserName"),n=document.getElementById("browserCore");index("Edg/")&&(e.innerText="Edge浏览器 "+ua.match("(?<=Edg/).*"),index("Chrome/")&&(n.innerText="Chromium "+ua.match("(?<=Chrome/).*").toString().split(" ")[0])),index("EdgA/")&&(e.innerText="Edge浏览器 "+ua.match("(?<=EdgA/).*"),index("Chrome/")&&(n.innerText="Chromium "+ua.match("(?<=Chrome/).*").toString().split(" ")[0])),index("Trident/")&&(n.innerText="Trident(IE) "+ua.split("Trident/")[1].split(";")[0],index("MSIE")?e.innerText="InternetExplorer "+ua.split("MSIE ")[1].split(";")[0]:index("rv:")&&(e.innerText="InternetExplorer 11.0")),index("Gecko/")&&index("Firefox")&&(n.innerText="Gecko "+name("Gecko"),e.innerText="Firefox "+name("Firefox")),index("Opera/")&&(e.innerText="Opera "+name("Opera"),n.innerText="Presto "+name("Presto")),index("wxwork/")&&(e.innerText="企业微信 "+name("wxwork")),index("WeChat/")&&(e.innerText="微信 "+name("MicroMessenger")),index("TIM/")&&index("QQ/")&&(e.innerText="TIM "+name("QQ")),index("QQ/")&&!1===index("TIM/")&&(e.innerText="TIM "+name("QQ")),index("AlipayClient/")&&(e.innerText="支付宝 "+name("AlipayClient")),index("Thunder/")&&(e.innerText="迅雷 "+name("Thunder")),index("Chrome/")?n.innerText="Chromium "+ua.match("(?<=Chrome/).*").toString().split(" ")[0]:index("WebKit/")&&(n.innerText="WebKit "+ua.split("WebKit/")[1].split(" ")[0])};</script><style>.td1{width:75px}.td{padding-top:3px;padding-bottom:3px}</style><body><div><table><tr><th colspan=2>浏览器UA检测&ensp;&ensp;V<span id=v>?.?</span><tr><td class="td1 td">软件名<td id=browserName class=td>没检测出来<tr><td class="td1 td">内核<td id=browserCore class=td>没检测出来<tr><td class="td1 td">UA信息<td id=browserUA class=td>浏览器不能运行JavaScript</table></div>
+<!DOCTYPE html><html lang=zh><head><meta charset=UTF-8><title>UA检测</title>
+    <script>
+        // 浏览器数据
+        var data = [
+            ['wxwork', '企业微信'],
+            ['Thunder', '迅雷'],
+            ['AlipayClient', '支付宝'],
+            ['WeChat', '微信'],
+            ['Opera', 'Opera'],
+            ['Firefox', 'Firefox'],
+            ['EdgA', '新版Edge'],
+            ['Edg', '新版Edge'],
+            ['OppoBrowser', 'OPPO浏览器'],
+            ['SamsungBrowser', '三星浏览器'],
+            ['VivoBrowser', 'VIVO浏览器'],
+            ['UCBrowser', 'UC浏览器'],
+            ['MiuiBrowser', '小米浏览器'],
+            ['HeyTapBrowser', 'OPPO浏览器'],
+            ['SogouMobileBrowser', '搜狗浏览器'],
+            ['HuaweiBrowser', '华为浏览器'],
+            ['TTWebView', '今日头条'],
+            ['NewsArticle', '今日头条'],
+            ['MQQBrowser', 'QQ浏览器']
+        ];
+        // 系统版本
+        var v = '1.6';
+    </script>
+<script>var ua=navigator.userAgent;function name(e){return ua.split(e+"/")[1].split(" ")[0]}function index(e){return-1!==ua.indexOf(e)}window.onload=function(){document.getElementById("v").innerText=v,document.getElementById("browserUA").innerText=ua;var e=document.getElementById("browserName"),n=document.getElementById("browserCore");for(var t in index("Chrome/")?n.innerText="Chromium "+name("Chrome"):index("WebKit/")?n.innerText="WebKit "+name("WebKit"):index("Presto/")?n.innerText="Presto "+name("Presto"):index("Gecko/")?n.innerText="Gecko "+name("Gecko"):index("Trident/")&&(n.innerText="Trident(IE) "+ua.split("Trident/")[1].split(";")[0]),data)-1!==ua.indexOf(data[t][0])&&(e.innerText=data[t][1]+" "+ua.split(data[t][0]+"/")[1].split(" ")[0]);index("MSIE")?e.innerText="InternetExplorer "+ua.split("MSIE ")[1].split(";")[0]:index("rv:")&&(e.innerText="InternetExplorer 11.0"),index("TIM/")&&index("QQ/")&&(e.innerText="TIM "+name("QQ")),index("QQ/")&&!1===index("TIM/")&&(e.innerText="TIM "+name("QQ"))};</script><style>.td1{width:75px}.td{padding-top:3px;padding-bottom:3px}</style><body><div><table><tr><th colspan=2>浏览器UA检测&ensp;&ensp;V<span id=v>?.?</span><tr><td class="td1 td">软件名<td id=browserName class=td>没检测出来<tr><td class="td1 td">内核<td id=browserCore class=td>没检测出来<tr><td class="td1 td">UA信息<td id=browserUA class=td>浏览器不能运行JavaScript</table></div></body></html>
