@@ -1,12 +1,119 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
+
+<!--    V1.0    新版发布   -->
+<!--    V1.1    [数据更新]更新了浏览器数据   -->
+<!--    V1.2    [问题修复]修复了name()的Bug   -->
+<!--            [系统优化]更改了网页文案   -->
+<!--    V1.3    [问题修复]修复了内核检测的Bug   -->
+<!--    V1.4    [系统优化]更新了判断方式   -->
+<!--    V1.5    [数据更新]更新了浏览器数据   -->
+<!--    V1.6    [系统优化]更改了判断顺序，改为：先判断内核，再判断名称（解决手机Edge再for循环后不向下进行的Bug）   -->
+<!--    V1.7    [问题修复]解决了UA中重复关键词，得不出期望结果的问题   -->
+<!--    V1.8    [数据更新]更新了浏览器数据   -->
+<!--            [系统优化]去除了压缩页面，只提供原始界面   -->
+
+    <script>
+        // 浏览器数据
+        var data = [
+            ['wxwork', '企业微信'],
+            ['Thunder', '迅雷'],
+            ['AlipayClient', '支付宝'],
+            ['WeChat', '微信'],
+            ['Opera', 'Opera'],
+            ['Firefox', 'Firefox'],
+            ['EdgA', '新版Edge'],
+            ['Edg', '新版Edge'],
+            ['OppoBrowser', 'OPPO浏览器'],
+            ['SamsungBrowser', '三星浏览器'],
+            ['VivoBrowser', 'VIVO浏览器'],
+            ['UCBrowser', 'UC浏览器'],
+            ['MiuiBrowser', '小米浏览器'],
+            ['HeyTapBrowser', 'OPPO浏览器'],
+            ['SogouMobileBrowser', '搜狗浏览器'],
+            ['HuaweiBrowser', '华为浏览器'],
+            ['TTWebView', '今日头条'],
+            ['NewsArticle', '今日头条'],
+            ['MQQBrowser', 'QQ浏览器'],
+            ['OPR', 'Opera浏览器']
+        ];
+        // 系统版本
+        var v = '1.7';
+    </script>
+
     <meta charset="UTF-8">
     <title>UA检测</title>
+    <script>
+        var ua = navigator.userAgent;
+        window.onload = function () {
+            // 软件版本
+            document.getElementById('v').innerText = v;
+            document.getElementById('browserUA').innerText = ua;
+            var browserName = document.getElementById('browserName');
+            var browserCore = document.getElementById('browserCore');
 
-    <script src="index.js"></script>
-    <link rel="stylesheet" href="index.css">
 
+            // 尝试检测内核
+            if (index('Chrome/')) {
+                browserCore.innerText = 'Chromium' + ' ' + name('Chrome');
+            } else if (index('WebKit/')) {
+                browserCore.innerText = 'WebKit' + ' ' + name('WebKit');
+            } else if (index('Presto/')) {
+                browserCore.innerText = 'Presto' + ' ' + name('Presto');
+            } else if (index('Gecko/')) {
+                browserCore.innerText = 'Gecko' + ' ' + name('Gecko');
+            } else if (index('Trident/')) {
+                browserCore.innerText = 'Trident(IE)' + ' ' + ua.split('Trident/')[1].split(';')[0];
+            }
+
+
+            // 常识判断浏览器名称
+            for (var dataKey in data) {
+                if (ua.indexOf(data[dataKey][0]) !== -1) {
+                    browserName.innerText = data[dataKey][1] + ' ' + ua.split(data[dataKey][0] + '/')[1].split(' ')[0];
+                    break;
+                }
+            }
+
+
+            // IE浏览器
+            if (index('MSIE')) {
+                browserName.innerText = 'InternetExplorer' + ' ' + ua.split('MSIE ')[1].split(';')[0];
+            } else if (index('rv:')) {
+                browserName.innerText = 'InternetExplorer 11.0';
+            }
+
+            // TIM
+            if (index('TIM/') && index('QQ/')) {
+                browserName.innerText = 'TIM' + ' ' + name('QQ');
+            }
+
+            // QQ
+            if (index('QQ/') && index('TIM/') === false) {
+                browserName.innerText = 'TIM' + ' ' + name('QQ');
+            }
+
+        };
+
+        function name(name) {
+            return ua.split(name + '/')[1].split(' ')[0];
+        }
+
+        function index(name) {
+            return ua.indexOf(name) !== -1;
+        }
+    </script>
+    <style>
+        .td1{
+            width: 75px;
+        }
+
+        .td{
+            padding-top: 3px;
+            padding-bottom: 3px;
+        }
+    </style>
 </head>
 <body>
 <div>
